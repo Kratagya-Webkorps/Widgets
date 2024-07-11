@@ -1,4 +1,3 @@
-// widgetActions.ts
 import { ProductWidget, UPDATE_WIDGET } from '../../interfaces';
 
 export interface UpdateWidgetAction {

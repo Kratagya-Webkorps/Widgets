@@ -41,7 +41,6 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
     onUpdate({ selectedColor: color });
   };
 
-  // Determine text color based on background color
   const isLightColor = localSelectedColor === "white" || localSelectedColor === "#F2EBDB";
   const textColor = isLightColor ? "text-black" : "text-white";
 
