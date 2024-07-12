@@ -1,6 +1,5 @@
 import { Reducer } from "@reduxjs/toolkit";
-import { WidgetsState, UPDATE_WIDGET } from "../../interfaces";
-
+import { WidgetsState } from "../../interfaces";
 const initialState: WidgetsState = {
   widgets: [
     {
@@ -26,27 +25,53 @@ const initialState: WidgetsState = {
       type: "carbon",
       amount: 100,
       action: "offsets",
-      active: false,
-      linked: true,
+      active: true,
+      linked: false,
       selectedColor: "#F2EBDB",
     },
   ],
 };
-
-const widgetsReducer: Reducer<WidgetsState> = (
+const widgetsReducer: Reducer<WidgetsState, any> = (
   state = initialState,
-  action: any
+  action
 ) => {
   switch (action.type) {
-    case UPDATE_WIDGET:
+    case "UPDATE_ACTIVATION": {
+      const { id, active } = action.payload;
+
+      return {
+        ...state,
+        widgets: state.widgets.map((widget) => {
+          if (active) {
+            return { ...widget, active: widget.id === id };
+          }
+          return { ...widget, active: false };
+        }),
+      };
+    }
+
+    case "UPDATE_PROFILE_LINK": {
+      const { id, linked } = action.payload;
+
       return {
         ...state,
         widgets: state.widgets.map((widget) =>
-          widget.id === action.payload.id
-            ? { ...widget, ...action.payload.settings }
-            : widget
+          widget.id === id ? { ...widget, linked } : widget
         ),
       };
+    }
+
+    case "UPDATE_COLOR": {
+      const { id, selectedColor } = action.payload;
+
+      return {
+        ...state,
+        widgets: state.widgets.map((widget) =>
+          widget.id === id ? { ...widget, selectedColor } : widget
+        ),
+      };
+    }
+
     default:
       return state;
   }

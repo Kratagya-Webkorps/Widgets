@@ -1,4 +1,3 @@
-
 import React from "react";
 import "./index.css";
 import ProductWidgetList from "./components/products/ProductWidgetList";

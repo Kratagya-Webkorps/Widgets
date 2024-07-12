@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ProductWidget as ProductWidgetType,
   ProductWidgetColor,
@@ -15,14 +15,9 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
   const [localSelectedColor, setLocalSelectedColor] =
     useState<ProductWidgetColor>(widget.selectedColor);
 
-  const colorPalette: ProductWidgetColor[] = [
-    "white",
-    "black",
-    "blue",
-    "#3B755F",
-    "#2E3A8C",
-    "#F2EBDB",
-  ];
+  useEffect(() => {
+    setLocalActive(widget.active);
+  }, [widget.active]); 
 
   const handleToggleChange = () => {
     const updatedActive = !localActive;
@@ -41,7 +36,18 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
     onUpdate({ selectedColor: color });
   };
 
-  const isLightColor = localSelectedColor === "white" || localSelectedColor === "#F2EBDB";
+  const colorPalette: ProductWidgetColor[] = [
+    "white",
+    "black",
+    "blue",
+    "#3B755F",
+    "#2E3A8C",
+    "#F2EBDB",
+    "purple",
+  ];
+
+  const isLightColor =
+    localSelectedColor === "white" || localSelectedColor === "#F2EBDB";
   const textColor = isLightColor ? "text-black" : "text-white";
 
   return (
@@ -61,13 +67,9 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
             onChange={handleLinkedChange}
             className="sr-only peer"
           />
-          <div
-            className={`relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-400 peer-checked:bg-blue-600`}
-          ></div>
-          <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Link to Public Profile
-          </span>
+          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-400 peer-checked:bg-blue-600"></div>
         </label>
+        <span className="ms-3 text-sm font-medium">Link to Public Profile</span>
       </div>
 
       <div className="my-2">
@@ -80,7 +82,7 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
                 localSelectedColor === color ? "border-2 border-white" : ""
               }`}
               style={{ backgroundColor: color }}
-              onClick={() => handleColorChange(color as ProductWidgetColor)}
+              onClick={() => handleColorChange(color)}
             />
           ))}
         </div>
@@ -94,13 +96,9 @@ const ProductWidget: React.FC<ProductWidgetProps> = ({ widget, onUpdate }) => {
             onChange={handleToggleChange}
             className="sr-only peer"
           />
-          <div
-            className={`relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-400 peer-checked:bg-blue-600`}
-          ></div>
-          <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Activate badge
-          </span>
+          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-400 peer-checked:bg-blue-600"></div>
         </label>
+        <span className="ms-3 text-sm font-medium">Activate badge</span>
       </div>
     </div>
   );
